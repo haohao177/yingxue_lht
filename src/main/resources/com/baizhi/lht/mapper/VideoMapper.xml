@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.lht.dao.VideoMapper">
+
+
+    <select id="queryByReleaseTimes" resultType="com.baizhi.lht.vo.VideoVo">
+        select
+            u.head_img headImg,
+            v.id id ,v.title videoTitle,v.brief description,v.cover cover,v.path path,v.publish_date uploadTime,
+            c.cate_name cateName
+        from yx_user u
+        right join yx_video v on u.id=v.user_id
+        left join yx_category c on v.category_id=c.id
+        order by v.publish_date desc
+    </select>
+
+    <select id="quryby" resultType="Video">
+      select * from yx_video
+    </select>
+
+
+    <select id="queryByLikeVideoName" resultType="com.baizhi.lht.vo.VideoVo">
+        select
+            u.head_img headImg,
+            v.id id ,v.title videoTitle,v.brief description,v.cover cover,v.path path,v.publish_date uploadTime,
+            c.cate_name cateName
+        from yx_user u
+        right join yx_video v on u.id=v.user_id
+        left join yx_category c on v.category_id=c.id
+        where title=#{content}
+        order by v.publish_date desc
+    </select>
+
+    <select id="queryCateVideoList" resultType="com.baizhi.lht.vo.VideoVo">
+         select
+                u.id userId,u.username username,c.id categoryId,
+				c.cate_name cateName,v.id id,v.title videoTitle,
+                v.cover cover,v.path path,v.publish_date uploadTime,
+				v.brief description
+		from yx_user u
+        right join yx_video v on u.id=v.user_id
+        left join yx_category c on v.category_id=c.id
+		where c.id=#{cateId}
+        order by v.publish_date desc
+
+    </select>
+
+
+</mapper>
